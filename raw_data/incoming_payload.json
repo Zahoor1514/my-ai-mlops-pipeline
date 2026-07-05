@@ -1,0 +1,6 @@
+[
+  {"user_id": 101, "age": 28, "income": 55000, "risk_score": 0.12},
+  {"user_id": 102, "age": 45, "income": 95000, "risk_score": 0.45},
+  {"user_id": 103, "age": -5, "income": 120000, "risk_score": 9.99},
+  {"user_id": 104, "age": 32, "income": -2500, "risk_score": 0.22}
+]
