@@ -1,3 +1,5 @@
-# MLOps Core Dependencies
 numpy
 scikit-learn
+fastapi
+uvicorn
+pydantic
