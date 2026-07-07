@@ -6,14 +6,20 @@ on:
 
 jobs:
   ai-mlops-lifecycle:
-    runs-on: ubuntu-latest
+    runs-ok: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout Codebase
         uses: actions/checkout@v4
 
-      - name: Build Enterprise Docker Image
-        run: docker build -t ai-mlops-engine:latest .
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Execute Full MLOps Isolated Container Loop
-        run: docker run --rm ai-mlops-engine:latest
+      - name: Build Enterprise Docker Image
+        run: docker build -t ghcr.io/${{ github.repository }}/ai-mlops-engine:latest .
+
+      - name: Push Production Image to Cloud Registry
+        run: docker push ghcr.io/${{ github.repository }}/ai-mlops-engine:latest
