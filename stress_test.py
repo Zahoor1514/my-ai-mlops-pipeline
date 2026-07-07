@@ -3,32 +3,16 @@ import random
 import requests
 
 API_URL = "http://localhost:8000"
+HEADERS = {"X-API-KEY": "SultanSecretKey2026"} # Secured Header Token
 
-print("🚀 Starting Production Load & Drift Simulation...")
+print("🚀 Running Authed Load Testing Matrix...")
 
-# Baseline clear check
-try:
-    root_check = requests.get(f"{API_URL}/")
-    print(f"Engine Connection: {root_check.json()['status']}")
-except Exception:
-    print("❌ Error: Live container is not running on port 8000. Run docker build first!")
-    exit(1)
-
-# Simulating 20 production users with fluctuating data metrics
-for i in range(1, 21):
-    # Generates standard income and randomly spikes it to trigger drift status
-    simulated_income = random.choice([65000, 72000, 80000, 115000, 130000])
-    
+for i in range(1, 11):
+    simulated_income = random.choice([120000, 135000, 140000, 150000]) # Forcing higher delta to check auto-retrain
     payload = {"income": float(simulated_income)}
     
-    response = requests.post(f"{API_URL}/predict", json=payload)
-    data = response.json()
-    
-    print(f"[Request #{i}] Income: ${simulated_income} -> Score: {data['financial_index_score']} | Status: {data['status']}")
-    time.sleep(0.5)  # Half second delay to mimic active users
+    response = requests.post(f"{API_URL}/predict", json=payload, headers=HEADERS)
+    print(f"[Transaction Logged #{i}] Injected Income: ${simulated_income} -> Response Status: {response.status_code}")
+    time.sleep(0.3)
 
-# Final Metrics and Drift report extraction
-print("\n📊 Fetching updated live metrics and systemic deviation analysis:")
-metrics_resp = requests.get(f"{API_URL}/metrics").json()
-for key, val in metrics_resp.items():
-    print(f"👉 {key.replace('_', ' ').title()}: {val}")
+print("\n✓ Load simulation complete. Check live dashboard window!")
