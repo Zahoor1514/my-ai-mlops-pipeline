@@ -1,0 +1,3 @@
+# MLOps Core Dependencies
+numpy
+scikit-learn
