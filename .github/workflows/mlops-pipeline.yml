@@ -27,5 +27,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: |
-            ghcr.io/${{ github.actor }}/ai-mlops-engine:latest
+          tags: ghcr.io/zahoor1514/ai-mlops-engine:latest
