@@ -1,0 +1,19 @@
+name: MLOps Autonomous AI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  ai-mlops-lifecycle:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Build Enterprise Docker Image
+        run: docker build -t ai-mlops-engine:latest .
+
+      - name: Execute Full MLOps Isolated Container Loop
+        run: docker run --rm ai-mlops-engine:latest
